@@ -1,0 +1,17 @@
+language: node_js
+sudo: required
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: "Unit Tests"
+      script: "npm test"
+    - stage: "Build"
+      script: "docker build -t mattouille/node-js-sample ."
+    - stage: "Integration Tests"
+      script: "docker run -d -p 127.0.0.1:5000:5000 -e PORT=5000 mattouille/node-js-sample /bin/sh -c \"node /code/bin/start\""
+      script: "curl 127.0.0.1:5000"
+    - stage: "Deploy"
+      script: "echo \"Deploying...\""
