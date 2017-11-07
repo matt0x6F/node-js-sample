@@ -11,6 +11,7 @@ jobs:
     - stage: "Build"
       script: "docker build -t mattouille/node-js-sample ."
     - stage: "Integration Tests"
-      script: "docker run -d -p 127.0.0.1:5000:5000 -e PORT=5000 mattouille/node-js-sample /bin/sh -c \"node /code/bin/start\"; curl 127.0.0.1:5000;"
+      script: "docker run -d -p 5000:5000 -e PORT=5000 mattouille/node-js-sample /bin/sh -c \"node /code/bin/start\""
+      script: "docker ps | grep mattouille/node-js-sample"
     - stage: "Deploy"
       script: "echo \"Deploying...\""
